@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Create and edit a note",
+    "sanity": true,
+    "viewport": "desktop",
+    "covers": [
+      "note creation",
+      "note editing",
+      "note date display",
+      "local persistence"
+    ],
+    "steps": [
+      "Create a note with a title and body",
+      "Save and confirm its date is shown",
+      "Edit the note and refresh"
+    ],
+    "expected": "The edited note remains visible with its date."
+  },
+  {
+    "name": "Delete a note",
+    "viewport": "desktop",
+    "covers": [
+      "note deletion"
+    ],
+    "steps": [
+      "Create a note",
+      "Delete it using its delete control"
+    ],
+    "expected": "The note is removed from the list."
+  },
+  {
+    "name": "Create and complete a task",
+    "viewport": "mobile",
+    "covers": [
+      "task date and time",
+      "task completion",
+      "bottom navigation"
+    ],
+    "steps": [
+      "Open Tasks from the bottom navigation",
+      "Add a task with a date and time",
+      "Mark it complete"
+    ],
+    "expected": "The task shows its date/time and completed state."
+  },
+  {
+    "name": "Delete a task",
+    "viewport": "desktop",
+    "covers": [
+      "task deletion"
+    ],
+    "steps": [
+      "Create a task",
+      "Delete the task"
+    ],
+    "expected": "The task is removed from the list."
+  }
+]
