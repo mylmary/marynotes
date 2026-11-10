@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { BookOpen, Check, Clock3, ListTodo, Plus, Search, Trash2, X, Pencil } from 'lucide-react';
+import { BookOpen, Check, Clock3, ListTodo, Plus, Search, Trash2, X, Pencil, Menu } from 'lucide-react';
 
 type Note = { id: string; title: string; body: string; createdAt: string; updatedAt: string };
 type Task = { id: string; title: string; date: string; time: string; done: boolean; createdAt: string };
@@ -16,6 +16,7 @@ function Flower({ className = '' }: { className?: string }) {
 
 function App() {
   const [section, setSection] = useState<'notes' | 'tasks'>('notes');
+  const [menuOpen, setMenuOpen] = useState(false);
   const [notes, setNotes] = useState<Note[]>(() => { try { return JSON.parse(localStorage.getItem(NOTES_KEY) || '[]'); } catch { return []; } });
   const [tasks, setTasks] = useState<Task[]>(() => { try { return JSON.parse(localStorage.getItem(TASKS_KEY) || '[]'); } catch { return []; } });
   const [noteOpen, setNoteOpen] = useState(false);
@@ -52,8 +53,14 @@ function App() {
     <div className="decor decor-one"><Flower /></div><div className="decor decor-two"><Flower /></div>
     <header className="topbar">
       <div className="brand"><div className="brand-mark"><Flower /></div><div><div className="brand-name">My Notes</div><div className="brand-subtitle">a little space for your thoughts</div></div></div>
-      <div className="top-date">{new Date().toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'})}</div>
+      <div className="header-actions"><div className="top-date">{new Date().toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'})}</div><button className="menu-toggle" aria-label="Open menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(v => !v)}><Menu size={22}/></button></div>
     </header>
+    {menuOpen && <button className="drawer-scrim" aria-label="Close menu" onClick={() => setMenuOpen(false)} />}
+    <aside className={menuOpen ? 'mobile-drawer open' : 'mobile-drawer'} aria-label="Main menu">
+      <div className="drawer-heading"><span>Menu</span><button className="drawer-close" aria-label="Close menu" onClick={() => setMenuOpen(false)}><X size={20}/></button></div>
+      <button className={section === 'notes' ? 'drawer-item active' : 'drawer-item'} onClick={() => { setSection('notes'); setMenuOpen(false); }}><BookOpen size={20}/><span>Notes</span></button>
+      <button className={section === 'tasks' ? 'drawer-item active' : 'drawer-item'} onClick={() => { setSection('tasks'); setMenuOpen(false); }}><ListTodo size={20}/><span>Tasks</span><span className="drawer-count">{tasks.filter(t=>!t.done).length}</span></button>
+    </aside>
     <main className="workspace">
       <aside className="welcome-panel">
         <nav className="side-nav" aria-label="Section navigation">
