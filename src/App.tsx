@@ -56,6 +56,10 @@ function App() {
     </header>
     <main className="workspace">
       <aside className="welcome-panel">
+        <nav className="side-nav" aria-label="Section navigation">
+          <button className={section === 'notes' ? 'side-nav-item active' : 'side-nav-item'} onClick={() => setSection('notes')}><BookOpen size={19}/> <span>Notes</span></button>
+          <button className={section === 'tasks' ? 'side-nav-item active' : 'side-nav-item'} onClick={() => setSection('tasks')}><ListTodo size={19}/> <span>Tasks</span><span className="side-task-count">{tasks.filter(t=>!t.done).length}</span></button>
+        </nav>
         <div className="welcome-flower"><Flower /></div>
         <p className="eyebrow">YOUR LITTLE CORNER</p>
         <h1>Keep your thoughts<br/><em>close to heart.</em></h1>
@@ -68,7 +72,7 @@ function App() {
           <button className={section === 'tasks' ? 'tab active' : 'tab'} onClick={() => setSection('tasks')}><ListTodo size={18}/> Tasks <span className="task-count">{tasks.filter(t=>!t.done).length}</span></button>
         </nav>
         {section === 'notes' ? <div className="section-content">
-          <div className="section-heading"><div><p className="eyebrow">YOUR THOUGHTS, ALL IN ONE PLACE</p><h2>My notes <span>✿</span></h2><p className="muted">Write it down, come back to it anytime.</p></div><button className="primary-btn" onClick={openNewNote}><Plus size={18}/> New note</button></div>
+          <div className="section-heading"><div><p className="eyebrow">YOUR THOUGHTS, ALL IN ONE PLACE</p><h2>My notes <span>✿</span></h2></div><button className="primary-btn" onClick={openNewNote}><Plus size={18}/> New note</button></div>
           <div className="search-wrap"><Search size={17}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Find a note..." aria-label="Search notes"/></div>
           {visibleNotes.length ? <div className="notes-grid">{visibleNotes.map((note,i)=><article className={'note-card note-'+(i%4)} key={note.id}><div className="note-card-top"><span className="note-date">{prettyDate(note.createdAt.slice(0,10))}</span><div className="card-actions"><button aria-label="Edit note" onClick={()=>openEditNote(note)}><Pencil size={15}/></button><button aria-label="Delete note" onClick={()=>setNotes(prev=>prev.filter(n=>n.id!==note.id))}><Trash2 size={15}/></button></div></div><h3>{note.title}</h3><p>{note.body || 'A little note to remember...'}</p><button className="edit-link" onClick={()=>openEditNote(note)}>Open note <span>↗</span></button></article>)}</div> : <div className="empty-state"><div className="empty-flower"><Flower /></div><h3>{search ? 'No notes found' : 'Your pages are waiting'}</h3><p>{search ? 'Try another search.' : 'Start with a thought, a reminder, or something lovely.'}</p>{!search && <button className="soft-btn" onClick={openNewNote}>Write your first note</button>}</div>}
         </div> : <div className="section-content">
