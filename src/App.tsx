@@ -67,10 +67,6 @@ function App() {
         <div className="welcome-note">“Small steps, lovely days.”</div>
       </aside>
       <section className="main-panel">
-        <nav className="tabs" aria-label="Main sections">
-          <button className={section === 'notes' ? 'tab active' : 'tab'} onClick={() => setSection('notes')}><BookOpen size={18}/> Notes</button>
-          <button className={section === 'tasks' ? 'tab active' : 'tab'} onClick={() => setSection('tasks')}><ListTodo size={18}/> Tasks <span className="task-count">{tasks.filter(t=>!t.done).length}</span></button>
-        </nav>
         {section === 'notes' ? <div className="section-content">
           <div className="section-heading"><div><p className="eyebrow">YOUR THOUGHTS, ALL IN ONE PLACE</p><h2>My notes <span>✿</span></h2></div><button className="primary-btn" onClick={openNewNote}><Plus size={18}/> New note</button></div>
           <div className="search-wrap"><Search size={17}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Find a note..." aria-label="Search notes"/></div>
